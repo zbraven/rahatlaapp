@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, View, Dimensions, Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
@@ -10,7 +10,6 @@ import { BreathingAnimation } from '@/components/BreathingAnimation';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
 import { Wind, Play, Pause, Square, RotateCcw } from 'lucide-react-native';
-import { Platform } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
