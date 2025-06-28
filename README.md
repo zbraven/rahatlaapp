@@ -163,4 +163,4 @@ EXPO_PUBLIC_APP_ENV=development
    eas submit --platform android
    ```
 
-For more information, visit the [Expo documentation](https://docs.expo.dev/).
+For more information, zbsarican@gmail.com
