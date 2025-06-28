@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
-import { LinearGradient } from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/hooks/useTheme';
 
 interface GradientBackgroundProps {
