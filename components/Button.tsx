@@ -124,7 +124,7 @@ export function Button({
         />
       )}
       {icon && !loading && (
-        <React.cloneElement(icon as React.ReactElement, {
+        React.cloneElement(icon as React.ReactElement, {
           style: { marginRight: title ? Spacing.sm : 0 },
         })
       )}
