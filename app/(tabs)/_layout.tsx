@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/hooks/useTheme';
-import { Home, Wind, Volume2, MessageCircle, User } from 'lucide-react-native';
+import { Chrome as Home, Wind, Volume2, MessageCircle, User } from 'lucide-react-native';
 
 export default function TabLayout() {
   const { t } = useTranslation();
