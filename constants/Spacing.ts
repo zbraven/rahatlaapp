@@ -7,4 +7,5 @@ export const Spacing = {
   '2xl': 48,
   '3xl': 64,
   '4xl': 96,
+  '5xl': 128,
 };

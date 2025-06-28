@@ -3,20 +3,22 @@ import { View, ViewProps, StyleSheet } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 
 interface ThemedViewProps extends ViewProps {
-  variant?: 'default' | 'surface' | 'transparent';
+  variant?: 'default' | 'surface' | 'card' | 'transparent';
 }
 
-export const ThemedView: React.FC<ThemedViewProps> = ({
+export function ThemedView({
   style,
   variant = 'default',
   ...props
-}) => {
+}: ThemedViewProps) {
   const { colors } = useTheme();
 
   const getBackgroundColor = () => {
     switch (variant) {
       case 'surface':
         return colors.surface;
+      case 'card':
+        return colors.card;
       case 'transparent':
         return 'transparent';
       default:
@@ -34,7 +36,7 @@ export const ThemedView: React.FC<ThemedViewProps> = ({
       {...props}
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

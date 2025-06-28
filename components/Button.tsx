@@ -4,69 +4,86 @@ import {
   TouchableOpacityProps,
   StyleSheet,
   ActivityIndicator,
+  ViewStyle,
 } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { useTheme } from '@/hooks/useTheme';
-import { Spacing } from '@/constants/spacing';
+import { Spacing } from '@/constants/Spacing';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent';
   size?: 'small' | 'medium' | 'large';
   loading?: boolean;
   fullWidth?: boolean;
+  icon?: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export function Button({
   title,
   variant = 'primary',
   size = 'medium',
   loading = false,
   fullWidth = false,
+  icon,
   style,
   disabled,
   ...props
-}) => {
+}: ButtonProps) {
   const { colors } = useTheme();
 
-  const getButtonStyle = () => {
-    const baseStyle = {
-      borderRadius: 12,
-      alignItems: 'center' as const,
-      justifyContent: 'center' as const,
-      flexDirection: 'row' as const,
+  const getButtonStyle = (): ViewStyle => {
+    const baseStyle: ViewStyle = {
+      borderRadius: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 2,
     };
 
     const sizeStyles = {
-      small: { paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md },
-      medium: { paddingVertical: Spacing.md, paddingHorizontal: Spacing.lg },
-      large: { paddingVertical: Spacing.lg, paddingHorizontal: Spacing.xl },
+      small: { 
+        paddingVertical: Spacing.sm, 
+        paddingHorizontal: Spacing.md,
+        minHeight: 36,
+      },
+      medium: { 
+        paddingVertical: Spacing.md, 
+        paddingHorizontal: Spacing.lg,
+        minHeight: 48,
+      },
+      large: { 
+        paddingVertical: Spacing.lg, 
+        paddingHorizontal: Spacing.xl,
+        minHeight: 56,
+      },
     };
 
     const variantStyles = {
       primary: {
         backgroundColor: colors.primary,
-        shadowColor: colors.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
       },
       secondary: {
         backgroundColor: colors.secondary,
-        shadowColor: colors.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
+      },
+      accent: {
+        backgroundColor: colors.accent,
       },
       outline: {
         backgroundColor: 'transparent',
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: colors.border,
+        shadowOpacity: 0,
+        elevation: 0,
       },
       ghost: {
         backgroundColor: 'transparent',
+        shadowOpacity: 0,
+        elevation: 0,
       },
     };
 
@@ -83,7 +100,8 @@ export const Button: React.FC<ButtonProps> = ({
     switch (variant) {
       case 'primary':
       case 'secondary':
-        return 'white';
+      case 'accent':
+        return '#FFFFFF';
       case 'outline':
       case 'ghost':
       default:
@@ -95,21 +113,29 @@ export const Button: React.FC<ButtonProps> = ({
     <TouchableOpacity
       style={[getButtonStyle(), style]}
       disabled={disabled || loading}
+      activeOpacity={0.8}
       {...props}
     >
       {loading && (
         <ActivityIndicator
           size="small"
           color={getTextColor()}
-          style={{ marginRight: Spacing.sm }}
+          style={{ marginRight: icon || title ? Spacing.sm : 0 }}
         />
       )}
-      <ThemedText
-        variant="button"
-        style={{ color: getTextColor() }}
-      >
-        {title}
-      </ThemedText>
+      {icon && !loading && (
+        <React.cloneElement(icon as React.ReactElement, {
+          style: { marginRight: title ? Spacing.sm : 0 },
+        })
+      )}
+      {title && (
+        <ThemedText
+          variant="button"
+          style={{ color: getTextColor() }}
+        >
+          {title}
+        </ThemedText>
+      )}
     </TouchableOpacity>
   );
-};
+}

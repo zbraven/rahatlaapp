@@ -1,0 +1,94 @@
+{
+  "common": {
+    "welcome": "Hoş Geldiniz",
+    "continue": "Devam Et",
+    "skip": "Geç",
+    "next": "İleri",
+    "back": "Geri",
+    "done": "Tamam",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "loading": "Yükleniyor...",
+    "error": "Bir şeyler ters gitti",
+    "retry": "Tekrar Dene",
+    "close": "Kapat"
+  },
+  "app": {
+    "name": "Rahatla",
+    "tagline": "Kişisel stres giderme arkadaşınız"
+  },
+  "tabs": {
+    "home": "Ana Sayfa",
+    "breathe": "Nefes",
+    "sounds": "Sesler",
+    "chat": "Sohbet",
+    "profile": "Profil"
+  },
+  "home": {
+    "greeting": "Merhaba",
+    "goodMorning": "Günaydın",
+    "goodAfternoon": "İyi öğleden sonra",
+    "goodEvening": "İyi akşamlar",
+    "todayQuote": "Bugünün İlhamı",
+    "quickStart": "Hızlı Başlat",
+    "breathingExercise": "Nefes Egzersizi",
+    "soundTherapy": "Ses Terapisi",
+    "aiChat": "AI Sohbet",
+    "premium": "Premium",
+    "recentActivity": "Son Aktivite",
+    "streakDays": "{{count}} günlük seri",
+    "streakDays_plural": "{{count}} günlük seri",
+    "minutesCompleted": "{{count}} dakika tamamlandı",
+    "minutesCompleted_plural": "{{count}} dakika tamamlandı"
+  },
+  "breathing": {
+    "title": "Nefes Egzersizi",
+    "subtitle": "Nazik ritmi takip edin",
+    "inhale": "Nefes Al",
+    "exhale": "Nefes Ver",
+    "hold": "Tut",
+    "prepare": "Hazırlan",
+    "completed": "Egzersiz tamamlandı! Harika gidiyorsun!",
+    "duration": "Süre: {{minutes}} dakika",
+    "cycles": "{{current}} / {{total}} döngü",
+    "startExercise": "Egzersizi Başlat",
+    "pauseExercise": "Duraklat",
+    "resumeExercise": "Devam Et",
+    "stopExercise": "Durdur",
+    "exercises": {
+      "basic": "Temel Nefes",
+      "deep": "Derin Rahatlama",
+      "energizing": "Enerji Verici Nefes",
+      "sleep": "Uyku Hazırlığı"
+    }
+  },
+  "sounds": {
+    "title": "Ses Terapisi",
+    "subtitle": "Sakinleştirici seslerle rahatlayın",
+    "nature": "Doğa",
+    "ambient": "Ortam",
+    "meditation": "Meditasyon",
+    "premium": "Premium",
+    "playing": "Çalıyor",
+    "paused": "Duraklatıldı"
+  },
+  "chat": {
+    "title": "AI Sohbet",
+    "subtitle": "Kişiselleştirilmiş rahatlama rehberliği alın",
+    "placeholder": "Rahatlama hakkında her şeyi sorabilirsiniz...",
+    "premiumRequired": "Premium abonelik gerekli",
+    "upgradeMessage": "Premium ile AI destekli kişiselleştirilmiş rehberliğin kilidini açın"
+  },
+  "profile": {
+    "title": "Profil",
+    "statistics": "İstatistikler",
+    "settings": "Ayarlar",
+    "language": "Dil",
+    "theme": "Tema",
+    "notifications": "Bildirimler",
+    "premium": "Premium",
+    "support": "Destek",
+    "about": "Hakkında",
+    "signOut": "Çıkış Yap"
+  }
+}

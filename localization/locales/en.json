@@ -1,0 +1,94 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "continue": "Continue",
+    "skip": "Skip",
+    "next": "Next",
+    "back": "Back",
+    "done": "Done",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "close": "Close"
+  },
+  "app": {
+    "name": "Rahatla",
+    "tagline": "Your personal stress relief companion"
+  },
+  "tabs": {
+    "home": "Home",
+    "breathe": "Breathe",
+    "sounds": "Sounds",
+    "chat": "Chat",
+    "profile": "Profile"
+  },
+  "home": {
+    "greeting": "Hello",
+    "goodMorning": "Good morning",
+    "goodAfternoon": "Good afternoon",
+    "goodEvening": "Good evening",
+    "todayQuote": "Today's Inspiration",
+    "quickStart": "Quick Start",
+    "breathingExercise": "Breathing Exercise",
+    "soundTherapy": "Sound Therapy",
+    "aiChat": "AI Chat",
+    "premium": "Premium",
+    "recentActivity": "Recent Activity",
+    "streakDays": "{{count}} day streak",
+    "streakDays_plural": "{{count}} day streak",
+    "minutesCompleted": "{{count}} minute completed",
+    "minutesCompleted_plural": "{{count}} minutes completed"
+  },
+  "breathing": {
+    "title": "Breathing Exercise",
+    "subtitle": "Follow the gentle rhythm",
+    "inhale": "Inhale",
+    "exhale": "Exhale",
+    "hold": "Hold",
+    "prepare": "Prepare",
+    "completed": "Exercise completed! You're doing great!",
+    "duration": "Duration: {{minutes}} minutes",
+    "cycles": "{{current}} of {{total}} cycles",
+    "startExercise": "Start Exercise",
+    "pauseExercise": "Pause",
+    "resumeExercise": "Resume",
+    "stopExercise": "Stop",
+    "exercises": {
+      "basic": "Basic Breathing",
+      "deep": "Deep Relaxation",
+      "energizing": "Energizing Breath",
+      "sleep": "Sleep Preparation"
+    }
+  },
+  "sounds": {
+    "title": "Sound Therapy",
+    "subtitle": "Relax with calming sounds",
+    "nature": "Nature",
+    "ambient": "Ambient",
+    "meditation": "Meditation",
+    "premium": "Premium",
+    "playing": "Playing",
+    "paused": "Paused"
+  },
+  "chat": {
+    "title": "AI Chat",
+    "subtitle": "Get personalized relaxation guidance",
+    "placeholder": "Ask me anything about relaxation...",
+    "premiumRequired": "Premium subscription required",
+    "upgradeMessage": "Unlock AI-powered personalized guidance with Premium"
+  },
+  "profile": {
+    "title": "Profile",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "notifications": "Notifications",
+    "premium": "Premium",
+    "support": "Support",
+    "about": "About",
+    "signOut": "Sign Out"
+  }
+}
