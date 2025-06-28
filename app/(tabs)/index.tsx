@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Image, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ThemedView } from '@/components/ThemedView';
@@ -6,16 +6,47 @@ import { ThemedText } from '@/components/ThemedText';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { GradientBackground } from '@/components/GradientBackground';
+import { ProgressTracker } from '@/components/ProgressTracker';
+import { PremiumModal } from '@/components/PremiumModal';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
-import { Wind, Volume2, MessageCircle, Crown, TrendingUp } from 'lucide-react-native';
+import { Wind, Volume2, MessageCircle, Crown, TrendingUp, Sparkles } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
+const quotes = [
+  {
+    text: "The present moment is the only time over which we have dominion.",
+    author: "Thích Nhất Hạnh",
+    image: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    text: "Peace comes from within. Do not seek it without.",
+    author: "Buddha",
+    image: 'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    text: "Breathe in peace, breathe out stress.",
+    author: "Anonymous",
+    image: 'https://images.pexels.com/photos/1029604/pexels-photo-1029604.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+];
+
 export default function HomeScreen() {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [premiumFeature, setPremiumFeature] = useState<string>('');
+
+  const currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  const progressData = {
+    streak: 7,
+    weeklyMinutes: 145,
+    totalSessions: 23,
+    weeklyGoal: 180,
+  };
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -33,7 +64,13 @@ export default function HomeScreen() {
   };
 
   const handleAIChat = () => {
-    router.push('/chat');
+    setPremiumFeature('AI Chat');
+    setShowPremiumModal(true);
+  };
+
+  const handlePremiumFeature = (feature: string) => {
+    setPremiumFeature(feature);
+    setShowPremiumModal(true);
   };
 
   return (
@@ -50,7 +87,7 @@ export default function HomeScreen() {
               {getGreeting()}
             </ThemedText>
             <ThemedText variant="body" color="textSecondary" style={styles.appName}>
-              {t('app.name')}
+              Welcome to {t('app.name')}
             </ThemedText>
           </View>
         </GradientBackground>
@@ -58,7 +95,7 @@ export default function HomeScreen() {
         {/* Today's Quote Section */}
         <Card variant="elevated" style={styles.quoteCard}>
           <Image
-            source={{ uri: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800' }}
+            source={{ uri: currentQuote.image }}
             style={styles.quoteImage}
             resizeMode="cover"
           />
@@ -67,13 +104,21 @@ export default function HomeScreen() {
               {t('home.todayQuote')}
             </ThemedText>
             <ThemedText variant="bodyLarge" weight="medium" style={styles.quote}>
-              "The present moment is the only time over which we have dominion."
+              "{currentQuote.text}"
             </ThemedText>
             <ThemedText variant="caption" color="textSecondary" style={styles.quoteAuthor}>
-              — Thích Nhất Hạnh
+              — {currentQuote.author}
             </ThemedText>
           </View>
         </Card>
+
+        {/* Progress Tracker */}
+        <View style={styles.section}>
+          <ThemedText variant="heading3" style={styles.sectionTitle}>
+            Your Progress
+          </ThemedText>
+          <ProgressTracker data={progressData} />
+        </View>
 
         {/* Quick Start Section */}
         <View style={styles.section}>
@@ -146,25 +191,49 @@ export default function HomeScreen() {
           </Card>
         </View>
 
-        {/* Recent Activity */}
+        {/* Premium Features Showcase */}
         <View style={styles.section}>
           <ThemedText variant="heading3" style={styles.sectionTitle}>
-            {t('home.recentActivity')}
+            Unlock More Features
           </ThemedText>
           
-          <Card variant="default" padding="large" style={styles.activityCard}>
-            <View style={styles.activityHeader}>
-              <TrendingUp color={colors.success} size={24} strokeWidth={2} />
-              <ThemedText variant="heading4" color="success">
-                {t('home.streakDays', { count: 7 })}
-              </ThemedText>
-            </View>
-            <ThemedText variant="body" color="textSecondary" style={styles.activityDescription}>
-              {t('home.minutesCompleted', { count: 45 })} this week
-            </ThemedText>
+          <Card 
+            variant="elevated" 
+            padding="large" 
+            pressable
+            onPress={() => handlePremiumFeature('Premium Collection')}
+            style={styles.premiumShowcase}
+          >
+            <GradientBackground variant="sunset" style={styles.showcaseGradient}>
+              <View style={styles.showcaseContent}>
+                <View style={styles.showcaseHeader}>
+                  <Sparkles color="white" size={32} strokeWidth={2} />
+                  <ThemedText variant="heading3" style={styles.showcaseTitle}>
+                    Premium Collection
+                  </ThemedText>
+                </View>
+                <ThemedText variant="body" style={styles.showcaseDescription}>
+                  Access 100+ exclusive sounds, advanced breathing techniques, and personalized AI guidance
+                </ThemedText>
+                <Button
+                  title="Explore Premium"
+                  variant="secondary"
+                  size="medium"
+                  icon={<Crown color="white" size={16} strokeWidth={2} />}
+                  onPress={() => handlePremiumFeature('Premium Collection')}
+                  style={styles.showcaseButton}
+                />
+              </View>
+            </GradientBackground>
           </Card>
         </View>
       </ScrollView>
+
+      <PremiumModal
+        visible={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+        feature={premiumFeature}
+      />
     </ThemedView>
   );
 }
@@ -190,9 +259,11 @@ const styles = StyleSheet.create({
   },
   greeting: {
     marginBottom: Spacing.xs,
+    color: 'white',
   },
   appName: {
     textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.9)',
   },
   quoteCard: {
     marginHorizontal: Spacing.lg,
@@ -288,16 +359,33 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     gap: 4,
   },
-  activityCard: {
-    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+  premiumShowcase: {
+    overflow: 'hidden',
+    height: 180,
   },
-  activityHeader: {
+  showcaseGradient: {
+    flex: 1,
+    padding: Spacing.lg,
+  },
+  showcaseContent: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  showcaseHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: Spacing.sm,
+    marginBottom: Spacing.md,
     gap: Spacing.sm,
   },
-  activityDescription: {
-    marginTop: Spacing.xs,
+  showcaseTitle: {
+    color: 'white',
+  },
+  showcaseDescription: {
+    color: 'rgba(255, 255, 255, 0.9)',
+    lineHeight: 22,
+    marginBottom: Spacing.lg,
+  },
+  showcaseButton: {
+    alignSelf: 'flex-start',
   },
 });

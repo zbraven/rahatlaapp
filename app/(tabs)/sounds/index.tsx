@@ -6,9 +6,10 @@ import { ThemedText } from '@/components/ThemedText';
 import { Card } from '@/components/Card';
 import { GradientBackground } from '@/components/GradientBackground';
 import { SoundPlayer } from '@/components/SoundPlayer';
+import { PremiumModal } from '@/components/PremiumModal';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
-import { Volume2, Play, Crown, TreePine, Cloud } from 'lucide-react-native';
+import { Volume2, Play, Crown, TreePine, Cloud, Waves, Zap } from 'lucide-react-native';
 
 interface Sound {
   id: string;
@@ -75,6 +76,33 @@ const sounds: Sound[] = [
     duration: '20:00',
     category: 'ambient',
   },
+  {
+    id: 'river',
+    title: 'Flowing River',
+    description: 'Peaceful water flow',
+    image: 'https://images.pexels.com/photos/1029604/pexels-photo-1029604.jpeg?auto=compress&cs=tinysrgb&w=400',
+    premium: false,
+    duration: '6:00',
+    category: 'water',
+  },
+  {
+    id: 'waterfall',
+    title: 'Waterfall',
+    description: 'Powerful cascading water',
+    image: 'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=400',
+    premium: true,
+    duration: '9:00',
+    category: 'water',
+  },
+  {
+    id: 'binaural',
+    title: 'Focus Beats',
+    description: 'Binaural beats for concentration',
+    image: 'https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&w=400',
+    premium: true,
+    duration: '30:00',
+    category: 'focus',
+  },
 ];
 
 const categories = [
@@ -90,6 +118,18 @@ const categories = [
     icon: Cloud,
     color: '#8B5CF6',
   },
+  {
+    id: 'water',
+    title: 'Water',
+    icon: Waves,
+    color: '#0EA5E9',
+  },
+  {
+    id: 'focus',
+    title: 'Focus',
+    icon: Zap,
+    color: '#F59E0B',
+  },
 ];
 
 export default function SoundsScreen() {
@@ -97,6 +137,8 @@ export default function SoundsScreen() {
   const { colors } = useTheme();
   const [selectedSound, setSelectedSound] = useState<Sound | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [premiumSound, setPremiumSound] = useState<string>('');
 
   const filteredSounds = activeCategory === 'all' 
     ? sounds 
@@ -104,8 +146,8 @@ export default function SoundsScreen() {
 
   const handleSoundPress = (sound: Sound) => {
     if (sound.premium) {
-      // Show premium upgrade modal
-      console.log('Show premium upgrade for:', sound.title);
+      setPremiumSound(sound.title);
+      setShowPremiumModal(true);
       return;
     }
     setSelectedSound(sound);
@@ -231,13 +273,19 @@ export default function SoundsScreen() {
           </View>
         </View>
 
-        {/* Featured Collection */}
+        {/* Featured Collections */}
         <View style={styles.section}>
           <ThemedText variant="heading3" style={styles.sectionTitle}>
-            Featured Collection
+            Featured Collections
           </ThemedText>
           
-          <Card variant="elevated" padding="large" style={styles.featuredCard}>
+          <Card 
+            variant="elevated" 
+            padding="large" 
+            pressable
+            onPress={() => setShowPremiumModal(true)}
+            style={styles.featuredCard}
+          >
             <View style={styles.featuredContent}>
               <View style={styles.featuredInfo}>
                 <ThemedText variant="heading4" style={styles.featuredTitle}>
@@ -260,6 +308,36 @@ export default function SoundsScreen() {
               />
             </View>
           </Card>
+
+          <Card 
+            variant="elevated" 
+            padding="large" 
+            pressable
+            onPress={() => setShowPremiumModal(true)}
+            style={[styles.featuredCard, { backgroundColor: 'rgba(34, 197, 94, 0.05)' }]}
+          >
+            <View style={styles.featuredContent}>
+              <View style={styles.featuredInfo}>
+                <ThemedText variant="heading4" style={styles.featuredTitle}>
+                  Nature Immersion
+                </ThemedText>
+                <ThemedText variant="body" color="textSecondary" style={styles.featuredDescription}>
+                  High-quality 3D nature sounds recorded in pristine environments
+                </ThemedText>
+                <View style={styles.featuredBadge}>
+                  <Crown color={colors.warning} size={16} strokeWidth={2} />
+                  <ThemedText variant="caption" color="warning" weight="medium">
+                    Premium Feature
+                  </ThemedText>
+                </View>
+              </View>
+              <Image
+                source={{ uri: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=200' }}
+                style={styles.featuredImage}
+                resizeMode="cover"
+              />
+            </View>
+          </Card>
         </View>
       </ScrollView>
 
@@ -270,6 +348,13 @@ export default function SoundsScreen() {
           onClose={() => setSelectedSound(null)}
         />
       )}
+
+      {/* Premium Modal */}
+      <PremiumModal
+        visible={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+        feature={premiumSound || 'Premium Sounds'}
+      />
     </ThemedView>
   );
 }
@@ -383,6 +468,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   featuredCard: {
+    marginBottom: Spacing.md,
     backgroundColor: 'rgba(139, 92, 246, 0.05)',
   },
   featuredContent: {
