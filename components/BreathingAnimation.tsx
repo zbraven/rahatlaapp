@@ -1,14 +1,29 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  interpolate,
-  Easing,
-} from 'react-native-reanimated';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/hooks/useTheme';
+
+// Only import reanimated on native platforms to avoid web issues
+let Animated: any;
+let useSharedValue: any;
+let useAnimatedStyle: any;
+let withTiming: any;
+let interpolate: any;
+let Easing: any;
+
+if (Platform.OS !== 'web') {
+  try {
+    const reanimated = require('react-native-reanimated');
+    Animated = reanimated.default;
+    useSharedValue = reanimated.useSharedValue;
+    useAnimatedStyle = reanimated.useAnimatedStyle;
+    withTiming = reanimated.withTiming;
+    interpolate = reanimated.interpolate;
+    Easing = reanimated.Easing;
+  } catch (error) {
+    console.warn('React Native Reanimated not available:', error);
+  }
+}
 
 const { width } = Dimensions.get('window');
 const CIRCLE_SIZE = width * 0.6;
@@ -21,6 +36,13 @@ interface BreathingAnimationProps {
 
 export function BreathingAnimation({ isActive, phase, duration }: BreathingAnimationProps) {
   const { colors } = useTheme();
+
+  // Web fallback animation using basic React Native Animated
+  if (Platform.OS === 'web' || !useSharedValue) {
+    return <WebBreathingAnimation isActive={isActive} phase={phase} duration={duration} colors={colors} />;
+  }
+
+  // Native animation using Reanimated
   const scale = useSharedValue(0.8);
   const opacity = useSharedValue(0.6);
 
@@ -83,6 +105,26 @@ export function BreathingAnimation({ isActive, phase, duration }: BreathingAnima
           end={{ x: 1, y: 1 }}
         />
       </Animated.View>
+      
+      {/* Inner glow */}
+      <View style={[styles.innerGlow, { backgroundColor: colors.primary + '20' }]} />
+    </View>
+  );
+}
+
+// Web fallback component using basic animations
+function WebBreathingAnimation({ isActive, phase, duration, colors }: any) {
+  return (
+    <View style={styles.container}>
+      {/* Static breathing circle for web */}
+      <View style={[styles.circle, { opacity: isActive ? 0.9 : 0.6 }]}>
+        <LinearGradient
+          colors={[colors.primary + 'AA', colors.accent + 'AA']}
+          style={styles.gradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        />
+      </View>
       
       {/* Inner glow */}
       <View style={[styles.innerGlow, { backgroundColor: colors.primary + '20' }]} />
