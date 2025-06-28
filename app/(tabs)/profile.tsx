@@ -7,19 +7,7 @@ import { Card } from '@/components/Card';
 import { GradientBackground } from '@/components/GradientBackground';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
-import { 
-  User, 
-  BarChart3, 
-  Settings, 
-  Globe, 
-  Palette, 
-  Bell, 
-  Crown, 
-  HelpCircle, 
-  Info, 
-  LogOut, 
-  ChevronRight 
-} from 'lucide-react-native';
+import { User, ChartBar as BarChart3, Settings, Globe, Palette, Bell, Crown, CircleHelp as HelpCircle, Info, LogOut, ChevronRight } from 'lucide-react-native';
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
