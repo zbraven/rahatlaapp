@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   ViewStyle,
+  View,
 } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { useTheme } from '@/hooks/useTheme';
@@ -116,26 +117,40 @@ export function Button({
       activeOpacity={0.8}
       {...props}
     >
-      {loading && (
-        <ActivityIndicator
-          size="small"
-          color={getTextColor()}
-          style={{ marginRight: icon || title ? Spacing.sm : 0 }}
-        />
-      )}
-      {icon && !loading && (
-        React.cloneElement(icon as React.ReactElement, {
-          style: { marginRight: title ? Spacing.sm : 0 },
-        })
-      )}
-      {title && (
-        <ThemedText
-          variant="button"
-          style={{ color: getTextColor() }}
-        >
-          {title}
-        </ThemedText>
-      )}
+      <View style={styles.buttonContent}>
+        {loading && (
+          <ActivityIndicator
+            size="small"
+            color={getTextColor()}
+            style={[styles.icon, { marginRight: (icon || title) ? Spacing.sm : 0 }]}
+          />
+        )}
+        {icon && !loading && (
+          <View style={[styles.icon, { marginRight: title ? Spacing.sm : 0 }]}>
+            {icon}
+          </View>
+        )}
+        {title && (
+          <ThemedText
+            variant="button"
+            style={{ color: getTextColor() }}
+          >
+            {title}
+          </ThemedText>
+        )}
+      </View>
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

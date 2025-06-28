@@ -7,7 +7,7 @@ import { Card } from '@/components/Card';
 import { GradientBackground } from '@/components/GradientBackground';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
-import { Volume2, Play, Crown, Waves, TreePine, Cloud } from 'lucide-react-native';
+import { Volume2, Play, Crown, TreePine, Cloud } from 'lucide-react-native';
 
 export default function SoundsScreen() {
   const { t } = useTranslation();
