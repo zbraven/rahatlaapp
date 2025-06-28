@@ -8,7 +8,7 @@ import { GradientBackground } from '@/components/GradientBackground';
 import { SoundPlayer } from '@/components/SoundPlayer';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
-import { Volume2, Play, Crown, TreePine, Cloud, Waves, Coffee } from 'lucide-react-native';
+import { Volume2, Play, Crown, TreePine, Cloud } from 'lucide-react-native';
 
 interface Sound {
   id: string;

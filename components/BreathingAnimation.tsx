@@ -3,7 +3,6 @@ import { View, StyleSheet, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withRepeat,
   withTiming,
   interpolate,
   Easing,
@@ -52,7 +51,7 @@ export function BreathingAnimation({ isActive, phase, duration }: BreathingAnima
       scale.value = withTiming(0.8, { duration: 500 });
       opacity.value = withTiming(0.6, { duration: 500 });
     }
-  }, [isActive, phase, duration]);
+  }, [isActive, phase, duration, scale, opacity]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {

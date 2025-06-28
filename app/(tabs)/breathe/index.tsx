@@ -11,7 +11,6 @@ import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
 import { Wind, Play, Pause, Square, RotateCcw } from 'lucide-react-native';
 import { Platform } from 'react-native';
-import * as Haptics from 'expo-haptics';
 
 const { width } = Dimensions.get('window');
 
@@ -82,7 +81,12 @@ export default function BreatheScreen() {
 
   const triggerHaptic = () => {
     if (Platform.OS !== 'web') {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      // Only import and use haptics on native platforms
+      import('expo-haptics').then((Haptics) => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }).catch(() => {
+        // Silently fail if haptics not available
+      });
     }
   };
 
@@ -126,7 +130,11 @@ export default function BreatheScreen() {
       }, 1000);
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [isActive, isPaused, currentPhase, currentCycle, selectedExercise]);
 
   const startExercise = (exercise: BreathingExercise) => {

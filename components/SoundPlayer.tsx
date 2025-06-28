@@ -7,7 +7,6 @@ import { useTheme } from '@/hooks/useTheme';
 import { Spacing } from '@/constants/Spacing';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react-native';
 import { Platform } from 'react-native';
-import * as Haptics from 'expo-haptics';
 
 const { width } = Dimensions.get('window');
 
@@ -31,7 +30,11 @@ export function SoundPlayer({ sound, onClose }: SoundPlayerProps) {
 
   const triggerHaptic = () => {
     if (Platform.OS !== 'web') {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      import('expo-haptics').then((Haptics) => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }).catch(() => {
+        // Silently fail if haptics not available
+      });
     }
   };
 
@@ -50,7 +53,11 @@ export function SoundPlayer({ sound, onClose }: SoundPlayerProps) {
       }, 1000);
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [isPlaying, isMuted, duration]);
 
   const togglePlayPause = () => {
